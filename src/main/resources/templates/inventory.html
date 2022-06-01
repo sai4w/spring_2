@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template" xmlns:sec=https://www.thymeleaf.org/thymeleaf-extras-springsecurity5>
+<link rel="stylesheet" type="text/css" href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+
+<head>
+<style>
+	label{
+		font-size:20px;
+		font-family:Georgia, 'Times New Roman', Times, serif;
+	}
+	title{
+		font-family:bold;
+	}
+	
+</style>
+	<meta charset="utf-8">
+	<title>Inventory</title>
+</head>
+
+<body style="background-color:rgb(127, 127, 127);">
+	<div layout:fragment="Mycontent">
+		<div class="container mt-5">
+			<div class="card mt-2">
+				<div class="card-header"><b>Inventory</b></div>
+				<div class="container">
+
+					<div class="row mt-4">
+					<div class="col-md-6">
+						<form th:action="@{/search-by-name}" method="get">
+							<label>name : </label>
+							<input type="text" name="nameSkin" placeholder="Enter skin  name" style="width: 40%; height:2rem;"/> 
+							<input type="submit" class="btn btn-primary" value="search">
+
+						</form>
+					</div>
+					<div class="col-md-6">
+						<form th:action="@{/search-by-type}" method="get">
+							<label>type : </label>
+							<select name="id" class="form-select" style="width: 40%; height:2rem;">
+								<option th:each="e:${types}" th:value="${e.idType}" th:text="${e.nameType}">
+								</option>
+							</select>
+							<input type="submit" class="btn btn-primary" value="search">
+
+						</form>
+					</div>
+					</div>
+
+
+					<table class="table table-striped mt-5">
+						<tr>
+							<th>ID</th>
+							<th>Skin name</th>
+							<th>Price</th>
+							<th>created date</th>
+							<th>Type</th>
+
+						</tr>
+						<tr th:each="e:${skins}">
+							<td th:text="${e.idSkin}"></td>
+							<td th:text="${e.nameSkin}"></td>
+							<td th:text="${e.priceSkin}"></td>
+							<td th:text="${e.dateSkin}"></td>
+							<td th:if="${!#strings.isEmpty(e.type.nameType)}" th:text="${e.type.nameType}"></td>
+							<td th:if="${#strings.isEmpty(e.type.nameType)}" th:text="${'Accun type'}"></td>
+							<td sec:authorize="hasRole('ADMIN')"><a class="btn btn-success"
+									th:href="@{modifier-skin(id=${e.idSkin})}">update</a>
+							</td>
+							<td sec:authorize="hasRole('ADMIN')"><a class="btn btn-danger"
+									onclick="return confirm('Are you sure?')" th:href="@{delete-skin(id=${e.idSkin},
+page=${currentPage},size=${size})}">Supprimer</a></td>
+						</tr>
+					</table>
+					<ul class="nav nav-pills">
+						<li th:each="page,status:${pages}"><a
+								th:class="${status.index==currentPage?'btn btn-primary':'btn' }"
+								th:href="@{ ListeEnseignants(page=${status.index}, size=${size} ) }"
+								th:text="${status.index }"></a></li>
+					</ul>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

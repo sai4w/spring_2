@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template">
+<head>
+<meta charset="utf-8">
+<title>Connexion</title>
+</head>
+<body style="background-color:rgb(127, 127, 127);">
+	<div layout:fragment="Mycontent">
+		<div class="container mt-5">
+			<div class="col-md-6 offset-md-3">
+				<div class="card" style="background:black;border-radius:20px;">
+					<div class="card-header" style="color: black;font-family:fantasy;background:white;">Login</div>
+					<div class="card-body">
+						<form th:action="@{login}" method="post">
+							<div class="form-group" style="margin-left:15%;">
+								<label class="control-label" style="color: white;font-family:fantasy;">Username :</label> <input
+									type="text" name="username" >
+							</div>
+							<div class="form-group" style="margin-left:15%;">
+								<label class="control-label" style="color: white;font-family:fantasy;">Password :</label> <input type="password" name="password" style="margin-left:5px;">
+							</div>
+							<button class="btn btn-secondary" style="margin-left:31%;width:40%;font-family:fantasy;background:white;color:black;">login</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template">
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+<head>
+<meta charset="utf-8">
+<title>Inventory</title>
+</head>
+<body style="background-color:rgb(127, 127, 127);">
+	<div layout:fragment="Mycontent">
+		<div class="container mt-5">
+			<div class="card">
+				<div class="card-header" th:if="${mode=='new'}">Add skin</div>
+				<div class="card-header" th:if="${mode=='edit'}">Update skin</div>
+				<div class="card-body">
+					<form th:action="@{saveSkin}" method="post">
+						<div class="form-group">
+							<label class="control-label" hidden>ID :</label> <input
+								type="hidden" name="idSkin" class="form-control"
+								th:value="${skin.idSkin}" />
+						</div>
+						<div class="form-group">
+							<label class="control-label">Name :</label> <input
+								type="text" name="nameSkin" class="form-control"
+								th:value="${skin.nameSkin}" /> <span
+								th:errors=${skin.nameSkin} class="text-danger">
+							</span>
+						</div>
+						<div class="form-group">
+							<label class="control-label">Price :</label> <input
+								type="text" name="priceSkin" class="form-control"
+								th:value="${skin.priceSkin}" /> <span
+								th:errors=${skin.priceSkin} class="text-danger">
+							</span>
+
+						</div>
+						<div class="form-group">
+							<label class="control-label">Fabricated Date :</label> <input
+								type="date" name="dateSkin" class="form-control"
+								th:value="${skin.dateSkin}" /> <span
+								th:errors=${skin.dateSkin} class="text-danger">
+							</span>
+
+
+						</div>
+						
+			      	<div class="form-group">
+							<label class="control-label">Type :</label> 
+							<select  type="text" name="type" class="form-control" th:value="${skin.type.idType}"  >
+								<option th:each="e:${types}" th:if="${mode=='edit'}"
+									th:value="${e.idType}" th:text="${e.nameType}"
+									th:selected="${ e.idType==skin.type.idType}"></option>
+
+								<option th:each="e:${types}" th:if="${mode=='new'}"
+									th:value="${e.idType}" th:text="${e.nameType}"></option>
+							</select>
+						</div>
+                       
+						<div>
+							<button type="submit" class="btn btn-primary">submit</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
